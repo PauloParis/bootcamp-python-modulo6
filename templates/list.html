@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}">
+  </head>
+<body>
+    {% include 'nav.html' %}
+    <h1 class="text-center my-5">Lista de Vehículos</h1>
+    <div class="px-5">
+        <table class="table table-striped">
+            <thead class="text-center text-white tabla-bg" >
+              <tr>
+                <th scope="col">Marca</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Serial Carroceria</th>
+                <th scope="col">Serial Motor</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Condicición de precio</th>
+                <th colspan="2">Acción</th>
+              </tr>
+            </thead>
+            <tbody class="text-center border">
+              {% for vehiculo in vehiculos %}
+              <tr>
+                <td>{{vehiculo.marca}}</td>
+                <td>{{vehiculo.modelo}}</td>
+                <td>{{vehiculo.serial_carroceria}}</td>
+                <td>{{vehiculo.serial_motor}}</td>
+                <td>{{vehiculo.categoria}}</td>
+                <td>{{vehiculo.precio}}</td>
+                <td>{{vehiculo.condicion}}</td>
+                <td><a class="btn btn-warning text-white" href="edit/{{vehiculo.id}}"><i class="fa-solid fa-pen"></i></a></td>
+                <td><button 
+                    class="btn btn-danger" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#exampleModal"
+                    data-vehiculo-id="{{vehiculo.id}}" 
+                    data-vehiculo-marca="{{vehiculo.marca}}" 
+                    data-vehiculo-modelo="{{vehiculo.modelo}}" 
+                    data-vehiculo-serial-carroceria="{{vehiculo.serial_carroceria}}" 
+                    data-vehiculo-serial-motor="{{vehiculo.serial_motor}}" 
+                    data-vehiculo-categoria="{{vehiculo.categoria}}" 
+                    data-vehiculo-precio="{{vehiculo.precio}}" 
+                    data-vehiculo-condicion-precio="{{vehiculo.condicion}}"
+                    ><i class="fa-solid fa-trash"></i>
+                </button></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+
+      <!-- MODAL -->
+
+      <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Eliminar Vehículo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <!-- <p>Id: <span id="modalId"></span></p> -->
+            <p>Marca: <span id="modalMarca"></span></p>
+            <p>Modelo: <span id="modalModelo"></span></p>
+            <p>Serial Carrocería: <span id="modalSerialCarroceria"></span></p>
+            <p>Serial Motor: <span id="modalSerialMotor"></span></p>
+            <p>Categoría: <span id="modalCategoria"></span></p>
+            <p>Precio: <span id="modalPrecio"></span></p>
+            <p>Condición de Precio: <span id="modalCondicionPrecio"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <a href="/" type="button" class="btn btn-primary" id="confirmar_eliminar">Confirmar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
+<script>
+    var modal = document.getElementById("exampleModal");
+  
+    var id = null
+
+    modal.addEventListener("show.bs.modal", function (event) {
+      var button = event.relatedTarget; // Botón que activó el modal
+  
+      // Obtener los datos del vehículo
+      id = button.getAttribute("data-vehiculo-id");
+      var marca = button.getAttribute("data-vehiculo-marca");
+      var modelo = button.getAttribute("data-vehiculo-modelo");
+      var serialCarroceria = button.getAttribute("data-vehiculo-serial-carroceria");
+      var serialMotor = button.getAttribute("data-vehiculo-serial-motor");
+      var categoria = button.getAttribute("data-vehiculo-categoria");
+      var precio = button.getAttribute("data-vehiculo-precio");
+      var condicionPrecio = button.getAttribute("data-vehiculo-condicion-precio");
+  
+      // Mostrar los datos del vehículo en el modal
+      //document.getElementById("modalId").textContent = id;
+      document.getElementById("modalMarca").textContent = marca;
+      document.getElementById("modalModelo").textContent = modelo;
+      document.getElementById("modalSerialCarroceria").textContent = serialCarroceria;
+      document.getElementById("modalSerialMotor").textContent = serialMotor;
+      document.getElementById("modalCategoria").textContent = categoria;
+      document.getElementById("modalPrecio").textContent = precio;
+      document.getElementById("modalCondicionPrecio").textContent = condicionPrecio;
+    });
+
+
+    var confirmar = document.getElementById("confirmar_eliminar");
+    confirmar.addEventListener('click', () => {
+        var deleteUrl = "delete/" + id;
+        confirmar.setAttribute("href", deleteUrl);
+    })
+
+  </script>
+  
+  

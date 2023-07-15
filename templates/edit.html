@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <h1 class="my-5 text-center">Editar Vehiculo</h1>
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <!-- marca -->
+            <div class="row mb-3">
+                <label for="marca" class="col-sm-2 col-form-label">Marca</label>
+                <div class="col-sm-10">
+                    <select class="form-select" name="marca" aria-label="Default select example">
+                        {% for choice in formaVehiculo.marca.field.choices %}
+                            <option value="{{ choice.0 }}" {% if choice.0 == formaVehiculo.marca.value %}selected{% endif %}>{{ choice.1 }}</option>
+                        {% endfor %}
+                      </select>
+                  </div>
+            </div>
+            <!-- modelo -->
+            <div class="row mb-3">
+                <label for="modelo" class="col-sm-2 col-form-label">Modelo</label>
+                <div class="col-sm-10">
+                    <input type="text" name="modelo" class="form-control" id="modelo" aria-describedby="modelo" autocomplete="off" value="{{ formaVehiculo.modelo.value }}">
+                </div>
+            </div>
+            <!-- serial carroceria -->
+            <div class="row mb-3">
+                <label for="carroceria" class="col-sm-2 col-form-label">Serial Carroceria</label>
+                <div class="col-sm-10">
+                    <input type="text" name="serial_carroceria" class="form-control" id="carroceria" aria-describedby="modelo" autocomplete="off" value="{{ formaVehiculo.serial_carroceria.value }}">
+                  </div>
+            </div>
+            <!-- serial motor -->
+            <div class="row mb-3">
+                <label for="motor" class="col-sm-2 col-form-label">Motor</label>
+                <div class="col-sm-10">
+                    <input type="text" name="serial_motor" class="form-control" id="motor" aria-describedby="modelo" autocomplete="off" value="{{ formaVehiculo.serial_motor.value }}">
+                  </div>
+            </div>
+            <!-- Categoria -->
+            <div class="row mb-3">
+                <label for="categoria" class="col-sm-2 col-form-label">Categoria</label>
+                <div class="col-sm-10">
+                    <select class="form-select" name="categoria" aria-label="Default select example">
+                        {% for choice in formaVehiculo.categoria.field.choices %}
+                            <option value="{{ choice.0 }}" {% if choice.0 == formaVehiculo.categoria.value %}selected{% endif %}>{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <!-- precio -->
+            <div class="row mb-3">
+                <label for="precio" class="col-sm-2 col-form-label">Precio</label>
+                <div class="col-sm-10">
+                    <input type="number" name="precio" class="form-control" id="precio" aria-describedby="modelo" autocomplete="off" value="{{ formaVehiculo.precio.value }}">
+                  </div>
+            </div>
+            {{vehiculo.id}}
+    
+            <button type="submit" class="btn btn-primary w-100 d-block"><strong>Enviar</strong></button>
+        </form>
+    </div>    
+</body>
+</html>
+  
+  

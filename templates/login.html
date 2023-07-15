@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
+    <link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}">
+
+</head>
+
+<body>
+    <div class="login-reg-panel">
+        <div class="login-info-box pt-3">
+            <h3>¿Tienes una Cuenta?</h3>
+            <p>Inicia Sesión aquí</p>
+            <label id="label-register" for="log-reg-show">Login</label>
+            <input type="radio" name="active-log-panel" id="log-reg-show" checked="checked">
+            
+        </div>
+
+        <div class="register-info-box pt-3">
+            <h3>¿Aún no tienes una cuenta?</h3>
+            <p>Registrate aquí</p>
+            <label id="label-login" for="log-login-show">Register</label>
+            <input  type="radio" name="active-log-panel" id="log-login-show">
+
+            
+        </div>
+
+        <div class="white-panel">
+            <div class="login-show">
+                <h2 class="mb-4">LOGIN</h2>
+                {% include "formLogin.html" %}
+            </div>
+            <div class="register-show">
+                <h2 class="mb-4">REGISTER</h2>
+                {% include "formRegister.html" %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.login-info-box').style.display = 'none';
+    document.querySelector('.login-show').classList.add('show-log-panel');
+    });
+
+var radioInputs = document.querySelectorAll('.login-reg-panel input[type="radio"]');
+for (var i = 0; i < radioInputs.length; i++) {
+    radioInputs[i].addEventListener('change', function() {
+        if (document.querySelector('#log-login-show').checked) {
+            document.querySelector('.register-info-box').style.display = 'none';
+            document.querySelector('.login-info-box').style.display = 'block';
+            document.querySelector('.login-show').style.display = 'none'
+            document.querySelector('.register-show').style.display = 'block'
+
+            document.querySelector('.white-panel').classList.add('right-log');
+            document.querySelector('.register-show').classList.add('show-log-panel');
+            document.querySelector('.login-show').classList.remove('show-log-panel');
+        } else if (document.querySelector('#log-reg-show').checked) {
+            document.querySelector('.register-info-box').style.display = 'block';
+            document.querySelector('.login-info-box').style.display = 'none';
+            
+            document.querySelector('.white-panel').classList.remove('right-log');
+            
+            document.querySelector('.login-show').classList.add('show-log-panel');
+            document.querySelector('.register-show').classList.remove('show-log-panel');
+            document.querySelector('.register-show').style.display = 'none'
+            document.querySelector('.login-show').style.display = 'block'
+        }
+    });
+}
+</script>

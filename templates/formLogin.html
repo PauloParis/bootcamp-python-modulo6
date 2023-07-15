@@ -1,0 +1,8 @@
+
+
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    <input type="text", name="username" class="form-control"  placeholder="Nombre de Usuario" autocomplete="off">
+    <input type="password", name="password" class="form-control"  placeholder="Contraseña" autocomplete="off">
+    <button class="btn btn-primary" type="submit">Enviar</button>
+</form>
